@@ -8,8 +8,6 @@ import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.batch.core.repository.JobExecutionAlreadyRunningException;
 import org.springframework.batch.core.repository.JobInstanceAlreadyCompleteException;
 import org.springframework.batch.core.repository.JobRestartException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -18,6 +16,7 @@ import java.util.logging.Logger;
 @Component
 public class JobService {
 
+    private static final Logger log = Logger.getLogger(JobService.class.getName());
     private final JobLauncher jobLauncher;
     private final Job job;
 
@@ -26,9 +25,6 @@ public class JobService {
         this.job = job;
     }
 
-    private static final Logger log = Logger.getLogger(JobService.class.getName());
-
-    @Scheduled(fixedRate = 1)
     public void jobRunner() throws JobInstanceAlreadyCompleteException, JobExecutionAlreadyRunningException,
             JobParametersInvalidException, JobRestartException {
         log.info("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");

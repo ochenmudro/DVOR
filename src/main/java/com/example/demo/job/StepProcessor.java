@@ -21,10 +21,10 @@ import java.util.Calendar;
 import java.util.List;
 
 public class StepProcessor implements Tasklet {
-    private EventService eventService;
-    private ClientService clientService;
-    private EventMapper eventMapper;
-    private ClientMapper clientMapper;
+    private final EventService eventService;
+    private final ClientService clientService;
+    private final EventMapper eventMapper;
+    private final ClientMapper clientMapper;
 
     public StepProcessor(EventService eventService, ClientService clientService, EventMapper eventMapper, ClientMapper clientMapper) {
         this.eventService = eventService;
@@ -33,7 +33,6 @@ public class StepProcessor implements Tasklet {
         this.clientMapper = clientMapper;
     }
 
-    @Override
     public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
         ZoneOffset zoneOffset = ZoneId.systemDefault().getRules().getOffset(Instant.now());
         OffsetDateTime today = Calendar.getInstance().toInstant().atOffset(zoneOffset);

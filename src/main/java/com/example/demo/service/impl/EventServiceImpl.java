@@ -5,7 +5,6 @@ import com.example.demo.dto.EventDTO;
 import com.example.demo.entitie.Client;
 import com.example.demo.entitie.Coach;
 import com.example.demo.entitie.Event;
-import com.example.demo.entitie.FitnessRoom;
 import com.example.demo.mapper.EventMapper;
 import com.example.demo.repository.ClientRepository;
 import com.example.demo.repository.EventRepository;
@@ -101,7 +100,6 @@ public class EventServiceImpl implements EventService {
     public List<EventDTO> getByClient(Integer clientId) {
         List<Event> events = eventRepository.findByClient(clientId);
         return events.stream().map(eventMapper::mapToDTO).toList();
-
     }
 
     @Override
@@ -109,5 +107,4 @@ public class EventServiceImpl implements EventService {
         List<Event> events = eventRepository.findByFitnessRoomId(id);
         return events.stream().map(eventMapper::mapToDTO).toList();
     }
-
 }

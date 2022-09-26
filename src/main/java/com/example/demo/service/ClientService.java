@@ -15,7 +15,4 @@ public interface ClientService {
     List<Client> getAll();
 
     void attendEvent(Integer clientId, Integer eventId);
-
-    void payment();
-
 }

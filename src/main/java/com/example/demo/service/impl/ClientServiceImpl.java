@@ -8,7 +8,6 @@ import com.example.demo.mapper.ClientMapper;
 import com.example.demo.repository.ClientRepository;
 import com.example.demo.repository.EventRepository;
 import com.example.demo.service.ClientService;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -29,18 +28,9 @@ public class ClientServiceImpl implements ClientService {
         this.eventRepository = eventRepository;
     }
 
-
     @Override
     public ClientDTO save(ClientDTO clientDTO) {
         Client client = clientMapper.mapToEntity(clientDTO);
-//        List<Event> events = new ArrayList<>();
-//        List<Integer> eventsId = client.getEventsId();
-//        for (Integer id : eventsId) {
-//            Event event = eventRepository.findById(id)
-//                    .orElseThrow(() -> new EntityNotFoundException("Event with id " + id));
-//            events.add(event);
-//        }
-//        client.setEvents(events);
         Client savedClient = clientRepository.save(client);
         log.info("Client is saved");
         return clientMapper.mapToDTO(savedClient);
@@ -78,14 +68,6 @@ public class ClientServiceImpl implements ClientService {
             client.addEvent(event);
             event.addClient(client);
             clientRepository.save(client);
-        }
-        else log.info("the place is full");
+        } else log.info("the place is full");
     }
-
-    @Override
-    @Scheduled(fixedRate = 60000)
-    public void payment() {
-
-    }
-
 }

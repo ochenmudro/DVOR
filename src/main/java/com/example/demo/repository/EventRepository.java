@@ -1,7 +1,6 @@
 package com.example.demo.repository;
 
 import com.example.demo.entitie.Event;
-import com.example.demo.entitie.FitnessRoom;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -23,7 +22,4 @@ public interface EventRepository extends JpaRepository<Event, Integer> {
 
     @Query(value = "SELECT * FROM event JOIN client_event ON id = event_id WHERE client_id = :clientId", nativeQuery = true)
     List<Event> findByClient(@Param("clientId") Integer clientId);
-
-//    @Query(value = "SELECT * FROM event WHERE date_time > :today AND client_id = :clientId", nativeQuery = true)
-//    List<Event> getFutureEventsByClient(@Param("clientId") Integer clientId, @Param("today") OffsetDateTime today);
 }

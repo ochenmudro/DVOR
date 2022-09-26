@@ -33,8 +33,9 @@ public class CoachServiceImpl implements CoachService {
         List<Event> events = coach.getEvents();
         List<Double> costs = events.stream().map(event -> event.getFitnessRoom().getEventCost()).toList();
         Double sum = 0.0;
-        for (Double cost : costs)
+        for (Double cost : costs) {
             sum += cost;
+        }
         return sum;
     };
 
@@ -85,8 +86,9 @@ public class CoachServiceImpl implements CoachService {
             event.setCoach(coach);
             eventRepository.save(event);
             log.info("event saved");
-        } else
+        } else {
             log.info("booked");
+        }
     }
 
     @Override

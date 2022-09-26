@@ -21,12 +21,12 @@ import java.util.logging.Logger;
 public class JobConfig {
     private static final Logger log = Logger.getLogger(DVORApplication.class.getName());
 
-    private JobBuilderFactory jobBuilderFactory;
-    private StepBuilderFactory stepBuilderFactory;
-    private EventService eventService;
-    private ClientService clientService;
-    private EventMapper eventMapper;
-    private ClientMapper clientMapper;
+    private final JobBuilderFactory jobBuilderFactory;
+    private final StepBuilderFactory stepBuilderFactory;
+    private final EventService eventService;
+    private final ClientService clientService;
+    private final EventMapper eventMapper;
+    private final ClientMapper clientMapper;
 
     public JobConfig(JobBuilderFactory jobBuilderFactory, StepBuilderFactory stepBuilderFactory, EventService eventService,
                      ClientService clientService, EventMapper eventMapper, ClientMapper clientMapper) {
@@ -39,20 +39,25 @@ public class JobConfig {
     }
 
     @Bean
-    public Job job(Step step) {
+    public Job job() {
         return jobBuilderFactory
                 .get("job")
-                .start(step)
+                .start(step())
                 .build();
     }
 
     @Bean
-    public Step step() throws IOException {
+    public Step step() {
         log.info("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         return stepBuilderFactory
                 .get("step")
-                .tasklet(new StepProcessor(eventService, clientService, eventMapper, clientMapper))
+                .tasklet(stepProcessor())
                 .allowStartIfComplete(true)
                 .build();
+    }
+
+    @Bean
+    public StepProcessor stepProcessor(){
+        return new StepProcessor(eventService, clientService, eventMapper, clientMapper);
     }
 }

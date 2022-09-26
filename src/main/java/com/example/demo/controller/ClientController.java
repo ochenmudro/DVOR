@@ -25,22 +25,30 @@ public class ClientController {
 
     @GetMapping
     public ResponseEntity<String> getClient(@RequestParam Integer clientId) {
-        if (clientId == null) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        if (clientId == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
         Client client = this.clientService.getById(clientId);
-        if (client == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        if (client == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
         return new ResponseEntity<>(client.toString(), HttpStatus.OK);
     }
 
     @PostMapping
     public ResponseEntity<ClientDTO> createClient(@RequestBody @Valid ClientDTO clientDTO) {
-        if (clientDTO == null) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        if (clientDTO == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
         this.clientService.save(clientDTO);
         return new ResponseEntity<>(clientDTO, HttpStatus.CREATED);
     }
 
     @PutMapping
     public ResponseEntity<ClientDTO> updateClient(@RequestBody @Valid ClientDTO clientDTO) {
-        if (clientDTO == null) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        if (clientDTO == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
         this.clientService.save(clientDTO);
         return new ResponseEntity<>(clientDTO, HttpStatus.OK);
     }
@@ -48,7 +56,9 @@ public class ClientController {
     @DeleteMapping(value = "{id}")
     public ResponseEntity<Client> deleteClient(@PathVariable("id") Integer id) {
         Client client = this.clientService.getById(id);
-        if (client == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        if (client == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
         this.clientService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
@@ -56,11 +66,13 @@ public class ClientController {
     @GetMapping(value = "all")
     public ResponseEntity<List<ClientDTO>> getAllClients() {
         List<ClientDTO> clients = this.clientService.getAll().stream().map(clientMapper::mapToDTO).toList();
-        if (clients.isEmpty()) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        if (clients.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
         return new ResponseEntity<>(clients, HttpStatus.OK);
     }
 
-    @PutMapping(value = "attend/")
+    @PutMapping(value = "attend")
     public ResponseEntity<Client> attendEvent(@RequestParam(value = "clientId") String clientId,
                                               @RequestParam(value = "eventId") String eventId) {
         Integer cId = Integer.parseInt(clientId);
